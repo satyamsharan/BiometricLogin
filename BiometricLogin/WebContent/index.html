@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link rel="stylesheet" type="text/css" href="style.css" />
 
 <script type="text/javascript">
 	function fnOpenDevice() {
@@ -47,28 +47,47 @@
 </head>
 <body>
 
+	<div id="header"></div>
+
+	<div id="bioMetricDiv">
+		<form action="http://csw.pcs.dei.ac.in:8080/portal/xlogin" method="post">
+			<div id="objectDiv">
+				<object id="objVerify" height="0" width="0"
+					classid="CLSID:8D613732-7D38-4664-A8B7-A24049B96117"
+					name="objVerify" codebase="objects/sgfplibx.ocx#version=3,6,1,0">
+				</object>
+			</div>
+			<object id="objFP"
+				style="left: 0px; width: 149px; top: 0px; height: 182px"
+				height="182" width="149"
+				classid="CLSID:D547FDD7-82F6-44e8-AFBA-7553ADCEE7C8" name="objFP"
+				codebase="objects/sgfplibx.ocx#version=3,6,1,0">
+				<param name="CodeName" value="1"></param>
+			</object>
+
+			<br /> 
+			<input type="hidden" id="min1" name="min1" /> 
+			<input type="hidden" name="eid" id="eid"/> 
+			<input type="hidden" name="pw" id="pw"/> 
+			<input class="button" type="button" value="Init Device" style="" onclick="fnOpenDevice();" /> 
+			<input class="button" type="button" value="Capture" style="" onclick="fnCapture();" />
+			<input type="submit" id="min1" name="min1" />
+		</form>
+	</div>
 
 
-<form action="http://csw.pcs.dei.ac.in:8080/portal" method="post">
-
-<object id="objVerify" style="left: 0px; top: 0px" height="0" width="0"
-	classid="CLSID:8D613732-7D38-4664-A8B7-A24049B96117" name="objVerify"
-	codebase="objects/sgfplibx.ocx#version=3,6,1,0"> </object>
-
-<object id="objFP"
-	style="left: 0px; width: 149px; top: 0px; height: 182px" height="182"
-	width="149" classid="CLSID:D547FDD7-82F6-44e8-AFBA-7553ADCEE7C8"
-	name="objFP" codebase="objects/sgfplibx.ocx#version=3,6,1,0">
-	<param name="CodeName" value="1"></param>
-</object>
-
-	<input type="hidden" id="min1" name="min1" />
-	<input type="hidden" name="eid" id="eid" />
-	<input type="hidden" name="pw" id="pw"/>
-	
-	<input class="button" type="button" value="Init Device" style="" onclick="fnOpenDevice();" />
-	<input class="button" type="button" value="Capture" style="" onclick="fnCapture();" />
-	
-</form>
+	<div id="footer">
+		<div class="footerExtNav" align="center">
+			| <a href="http://www.dei.ac.in" target="_blank">Dayalbagh
+				Educational Institute</a> | <a
+				href="http://node11.clab.pcs.dei:8080/portal/site/!gateway/page/!gateway-600"
+				target="_blank">Acknowledgements</a> |
+		</div>
+		<br />
+		<div class="sakaiCopyrightInfo">
+			&copy; 2009 Dayalbagh Educational Institute, Dayalbagh, Agra UP
+			282005, INDIA<br> Phone: +91-0562-2801545 Fax: +91-0562-2801226
+		</div>
+	</div>
 </body>
 </html>
