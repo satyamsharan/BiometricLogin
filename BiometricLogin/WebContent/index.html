@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<object id="objVerify" style="left: 0px; top: 0px" height="0" width="0"
+	classid="CLSID:8D613732-7D38-4664-A8B7-A24049B96117" name="objVerify"
+	codebase="objects/sgfplibx.ocx#version=3,6,1,0"> </object>
+
+<object id="objFP"
+	style="left: 0px; width: 149px; top: 0px; height: 182px" height="182"
+	width="149" classid="CLSID:D547FDD7-82F6-44e8-AFBA-7553ADCEE7C8"
+	name="objFP" codebase="objects/sgfplibx.ocx#version=3,6,1,0">
+	<param name="CodeName" value="1"></param>
+</object>
+
+<script type="text/javascript">
+	function fnOpenDevice() {
+
+		document.forms[0].objFP.DeviceID = -1
+		document.forms[0].objFP.CodeName = 3;
+		document.forms[0].objFP.MinutiaeMode = 768;
+
+		// template format of objVerify should be the same to those of objFP[]
+		document.forms[0].objVerify.MinutiaeMode = 768;
+		document.forms[0].min1.value = "";
+		return;
+	}
+
+	function fnCapture() {
+		var strmin;
+
+		var flag = true;
+		document.forms[0].objFP.Capture;
+		var result = document.forms[0].objFP.ErrorCode;
+		if (result == 0) {
+			//var strimg1 = objFP.ImageTextData;
+
+			strmin = document.forms[0].objFP.MinTextData;
+			document.forms[0].min1.value = strmin;
+		} else if (result == 52) {
+			alert('Please Init your device');
+		} else if (result == 57) {
+			alert('Please put your finger on the device');
+		} else
+
+		{
+			alert('failed - ' + result);
+
+		}
+
+		return flag;
+	}
+</script>
+
+<title>Login</title>
+</head>
+<body>
+
+
+
+<form action="http://csw.pcs.dei.ac.in:8080/portal" method="post">
+	<input type="button" value="Init Device" style="" onclick="fnOpenDevice();" />
+	<input type="button" value="Capture" style="" onclick="fnCapture();" />
+	<input type="hidden" id=" min1" name="min1" />
+</form>
+</body>
+</html>
