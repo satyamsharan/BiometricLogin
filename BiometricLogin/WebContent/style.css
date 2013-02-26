@@ -1,2 +1,9 @@
 @CHARSET "ISO-8859-1";
 
+#objFP{
+	border: black 1px solid;
+}
+
+.button{
+	border: black 1px solid;
+}
