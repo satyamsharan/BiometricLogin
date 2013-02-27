@@ -5,27 +5,27 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 
 <script type="text/javascript">
-	function fnOpenDevice() {
-
-		document.forms[0].objFP.DeviceID = -1
-		document.forms[0].objFP.CodeName = 3;
-		document.forms[0].objFP.MinutiaeMode = 768;
-
-		// template format of objVerify should be the same to those of objFP[]
-		document.forms[0].objVerify.MinutiaeMode = 768;
-		document.forms[0].min1.value = "";
-		return;
-	}
-
+	
 	function fnCapture() {
+	
+		var objFPObj=document.getElementById("objFP");
+		var objVerifyObj=document.getElementById("objVerify");
+		
+		var objVerifyObj=document.getElementById("objVerify");
+		
+		objFPObj.DeviceID = -1
+		objFPObj.CodeName = 3;
+		objFPObj.MinutiaeMode = 768;
+		
+		objVerifyObj.MinutiaeMode = 768;
+		
+		document.getElementById("min1").value = "";
 		var strmin;
 
 		var flag = true;
 		document.forms[0].objFP.Capture;
 		var result = document.forms[0].objFP.ErrorCode;
 		if (result == 0) {
-			//var strimg1 = objFP.ImageTextData;
-
 			strmin = document.forms[0].objFP.MinTextData;
 			document.forms[0].min1.value = strmin;
 		} else if (result == 52) {
