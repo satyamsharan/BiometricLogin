@@ -5,41 +5,102 @@
 <link rel="stylesheet" type="text/css" href="style.css" />
 
 <script type="text/javascript">
-	
-	function fnCapture() {
-	
-		var objFPObj=document.getElementById("objFP");
-		var objVerifyObj=document.getElementById("objVerify");
-		
-		var objVerifyObj=document.getElementById("objVerify");
-		
-		objFPObj.DeviceID = -1
-		objFPObj.CodeName = 3;
-		objFPObj.MinutiaeMode = 768;
-		
-		objVerifyObj.MinutiaeMode = 768;
-		
-		document.getElementById("min1").value = "";
-		var strmin;
+	function changeEID() {
+		document.getElementById("error").innerHTML = ' ';
+	}
+	function captureFP() {
+		var userId = document.getElementById("eid");
+		if ((!userId.value) || (userId.value == '')
+				|| (userId.value.trim() == '')) {
+			document.getElementById("error").innerHTML = 'Enter your User ID first.';
+		} else {
+			var objFPObj = document.getElementById("objFP");
+			var objVerifyObj = document.getElementById("objVerify");
 
-		var flag = true;
-		document.forms[0].objFP.Capture;
-		var result = document.forms[0].objFP.ErrorCode;
-		if (result == 0) {
-			strmin = document.forms[0].objFP.MinTextData;
-			document.forms[0].min1.value = strmin;
-		} else if (result == 52) {
-			alert('Please Init your device');
-		} else if (result == 57) {
-			alert('Please put your finger on the device');
-		} else
+			var objVerifyObj = document.getElementById("objVerify");
 
-		{
-			alert('failed - ' + result);
+			objFPObj.DeviceID = -1
+			objFPObj.CodeName = 3;
+			objFPObj.MinutiaeMode = 768;
 
+			objVerifyObj.MinutiaeMode = 768;
+
+			document.getElementById("min1").value = "";
+			var strmin;
+
+			var flag = true;
+			objFPObj.Capture;
+			var result = objFPObj.ErrorCode;
+			if (result == 0) {
+				strmin = objFPObj.MinTextData;
+				document.getElementById("min1").value = strmin;
+
+
+				var xmlhttp;
+				if (window.XMLHttpRequest){
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				}else{
+					// code for IE6, IE5
+				  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				xmlhttp.onreadystatechange=function(){
+				  if (xmlhttp.readyState==4 && xmlhttp.status==200){
+				    verify(xmlhttp.responseText);
+				  }
+				}
+				xmlhttp.open("POST","getMin.jsp?uid="+userId.value,true);
+				xmlhttp.send();
+				
+				return true;
+			} else if (result == 52) {
+				alert('Device not initialized. Please make sure your device is connected and is properly installed.');
+			} else if (result == 57) {
+				alert('Please put your finger on the device before clicking.');
+			} else {
+				alert('Device not initialized. Please make sure your device is connected and is properly installed. Otherwise use alternate authentication process.');
+			}
 		}
-
-		return flag;
+		return false;
+	}
+	
+	function verify(var min){
+			var errorLabel = document.getElementById("error")
+			var strmin1 = document.getElementById("min1").value;
+			var strmin2 = min;
+			var objVerifyOj = document.getElementById("objVerify");
+				objVerifyOj.SecurityLevel=6;
+			
+		if ( objVerifyOj.VerifyExForText(strmin1, strmin1, strmin2) && objVerifyOj.ErrorCode == 0){
+			errorLabel.value='Thumb Impression matched';
+			var xmlhttp;
+			if (window.XMLHttpRequest){
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			}else{
+				// code for IE6, IE5
+			  	xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			xmlhttp.onreadystatechange=function(){
+			  if (xmlhttp.readyState==4 && xmlhttp.status==200){
+			    login(xmlhttp.responseText);
+			  }
+			}
+			xmlhttp.open("POST","getPassword.jsp?uid="+userId.value,true);
+			xmlhttp.send();
+		}else if(objVerifyOj.ErrorCode == 106){
+			errorLabel.value='Biometric validation failed. Please try again.';
+		}else{
+			errorLabel.value=('Failed - ' + objVerifyOj.ErrorCode);
+		}
+			
+	}
+	
+	function login(var password){
+		document.getElementById("pw").value=password;
+		document.getElementById("loginForm").submit();
 	}
 </script>
 
@@ -50,13 +111,17 @@
 	<div id="header"></div>
 
 	<div id="bioMetricDiv">
-		<form action="http://csw.pcs.dei.ac.in:8080/portal/xlogin" method="post">
-			<div id="objectDiv">
-				<object id="objVerify" height="0" width="0"
-					classid="CLSID:8D613732-7D38-4664-A8B7-A24049B96117"
-					name="objVerify" codebase="objects/sgfplibx.ocx#version=3,6,1,0">
-				</object>
-			</div>
+		<h1>Login through Bio-Metric Authentication</h1>
+		<form id="loginForm" method="post" action="http://csw.pcs.dei.ac.in:8080/portal/xlogin" enctype="application/x-www-form-urlencoded">
+			<br /> <label for="eid">Enter your User ID</label><br /> <input
+				name="eid" id="eid" type="text"  onFocus="changeEID();"/> <br /> <input type="hidden"
+				id="min1" name="min1" />
+				<input type="hidden" name="pw" id="pw"/>
+			<object id="objVerify" height="0" width="0"
+				classid="CLSID:8D613732-7D38-4664-A8B7-A24049B96117"
+				name="objVerify" codebase="objects/sgfplibx.ocx#version=3,6,1,0">
+			</object>
+			<br />
 			<object id="objFP"
 				style="left: 0px; width: 149px; top: 0px; height: 182px"
 				height="182" width="149"
@@ -64,14 +129,16 @@
 				codebase="objects/sgfplibx.ocx#version=3,6,1,0">
 				<param name="CodeName" value="1"></param>
 			</object>
-
-			<br /> 
-			<input type="hidden" id="min1" name="min1" /> 
-			<input type="hidden" name="eid" id="eid"/> 
-			<input type="hidden" name="pw" id="pw"/> 
-			<input class="button" type="button" value="Init Device" style="" onclick="fnOpenDevice();" /> 
-			<input class="button" type="button" value="Capture" style="" onclick="fnCapture();" />
-			<input type="submit" id="min1" name="min1" />
+			<br /> <input class="button" type="button" value="Login"
+				title="Login through Bio-Metric Authentication (Requires Bio-Metric Device)"
+				onclick="captureFP();" /> <br /> <span id="error" class="error">
+			</span><br /> <span>Place your Right hand Thumb on the Bio-Metric Device and
+				click Login</span><br /> <a
+				title="If can register for Bio-Metric login method, if you haven't registered for it yet."
+				href="register.html" class="button">Register for Bio-Metric Login</a><br /> <a
+				title="If you don't have a biometric device you can use your password to login."
+				href="http://csw.pcs.dei.ac.in:8080/portal" class="button">Login
+				through your password</a><br />
 		</form>
 	</div>
 

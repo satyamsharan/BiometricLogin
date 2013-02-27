@@ -1,25 +1,90 @@
 @CHARSET "ISO-8859-1";
+html{
+	display:block;
+}
+h1{
+	font-family: Arial,sans-serif;
+    font-size:large;
+    color:#079;
+}
+
+span{
+	margin-top:10px;
+	margin-bottom:10px;
+	display:block;
+	font-size:small;
+    color:#000;
+    text-decoration:none;
+}
+.error{
+	display:block;
+	font-size:small;
+    color:#ff0000;
+    text-decoration:none;
+    padding: 20px;
+}
 
 #objFP{
-	
+	border:1px solid #ededed;
 }
-
-.button{
+table{
+	border:1px solid #ededed;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: Arial,sans-serif;
+    color:#079;
+    font-size: small;
+    text-align: right;
+    padding: 10px;
 }
-
+#uid{
+	width: 100%;
+}
+#password{
+	width: 100%;
+}
 #header{
 	background-image: url("images/logo_inst.gif");
 	background-repeat:no-repeat;
 	height: 105px;
 }
 #bioMetricDiv{
-	border:1px solid;
+	border:1px solid #ededed;
 	text-align: center;
 	width: 50%;
-	height:500px;
+	height:600px;
     margin: 20px auto;
+    font-family: Arial,sans-serif;
+    color:#079;
 }
 
+#eid{
+	margin:10px;
+	width: 250px;
+	font-family: Arial,sans-serif;
+    color:#079;
+    text-align: center;
+}
+
+.button{
+	border: none;
+	margin: none;
+	padding-right:5px;
+	padding-left:5px;
+	background: none;
+	background-color: transparent;
+	font-family: Arial,sans-serif;
+	font-size:small;
+    color:#079;
+    text-decoration:none;
+    cursor: pointer;
+}
+
+.button:hover{
+	text-decoration:underline;
+	padding-right:3px;
+	padding-left:7px;
+}
 #objectDiv{
 	display:none;
 }
@@ -50,4 +115,7 @@
 	color: #516C80;
 }
 
-
+.success{
+	width: 50%;
+	height: 50%;
+}

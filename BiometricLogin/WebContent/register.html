@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css" />
+
+<script type="text/javascript">
+	function change() {
+		document.getElementById("error").innerHTML = ' ';
+	}
+	function register() {
+
+		var userId = document.getElementById("uid");
+		var pass = document.getElementById("password");
+		if ((!userId.value) || (userId.value == '')
+				|| (userId.value.trim() == '')) {
+			document.getElementById("error").innerHTML = 'Enter your User ID';
+		}else if ((!pass.value) || (pass.value == '')
+				|| (pass.value.trim() == '')) {
+			document.getElementById("error").innerHTML = 'Enter your Password';
+		} else {
+			var objFPObj = document.getElementById("objFP");
+			objFPObj.DeviceID = -1
+			objFPObj.CodeName = 3;
+			objFPObj.MinutiaeMode = 768;
+
+			document.getElementById("min1").value = "";
+			var strmin;
+
+			var flag = true;
+			objFPObj.Capture;
+			var result = objFPObj.ErrorCode;
+			if (result == 0) {
+				strmin = objFPObj.MinTextData;
+				document.getElementById("min1").value = strmin;
+				return true;
+			} else if (result == 52) {
+				alert('Device not initialized. Please make sure your device is connected and is properly installed.');
+			} else if (result == 57) {
+				alert('Please put your finger on the device before clicking.');
+			} else {
+				alert('Device not initialized. Please make sure your device is connected and is properly installed. Otherwise use alternate authentication process.');
+			}
+		}
+		return true;
+	}
+</script>
+
+<title>Register</title>
+</head>
+<body>
+
+	<div id="header"></div>
+
+	<div id="bioMetricDiv">
+		<h1>Register for Bio-Metric Authentication</h1>
+		<form action="register.jsp"
+			method="post">
+			<div class="tableDiv">
+			<table>
+			<tr>
+			<td><label for="uid">User ID:</label></td>
+			<td><input name="uid" id="uid" type="text"  onFocus="change();"/></td>
+			</tr>
+			<tr>
+			<td><label for="password">Password:</label></td>
+			<td><input name="password" id="password" type="password"  onFocus="change();"/></td>
+			</tr>
+			</table>
+			</div>
+			<span>Enter Your User ID, Password and Place your <br/>Right hand Thumb on the Bio-Metric Device and<br/>click Register</span><br />
+				
+			<input type="hidden" id="min1" name="min1" />
+			
+			
+			<object id="objFP"
+				style="left: 0px; width: 149px; top: 0px; height: 182px"
+				height="182" width="149"
+				classid="CLSID:D547FDD7-82F6-44e8-AFBA-7553ADCEE7C8" name="objFP"
+				codebase="objects/sgfplibx.ocx#version=3,6,1,0">
+				<param name="CodeName" value="1"></param>
+			</object>
+			<br /> <input class="button" type="submit" value="Register"
+				title="Register for Bio-Metric Authentication (Requires Bio-Metric Device)"
+				onclick="register();" /> <br /> 
+				<span id="error" class="error">
+			</span><br />  <a
+				title="If you already have Bio-Metric credentials, login from here."
+				href="index.html" class="button">Login using Bio-Metric Login</a><br /> <a
+				title="If you don't have a biometric device you can use your password to login."
+				href="http://csw.pcs.dei.ac.in:8080/portal" class="button">Login
+				through your password</a><br />
+		</form>
+	</div>
+
+
+	<div id="footer">
+		<div class="footerExtNav" align="center">
+			| <a href="http://www.dei.ac.in" target="_blank">Dayalbagh
+				Educational Institute</a> | <a
+				href="http://node11.clab.pcs.dei:8080/portal/site/!gateway/page/!gateway-600"
+				target="_blank">Acknowledgements</a> |
+		</div>
+		<br />
+		<div class="sakaiCopyrightInfo">
+			&copy; 2009 Dayalbagh Educational Institute, Dayalbagh, Agra UP
+			282005, INDIA<br> Phone: +91-0562-2801545 Fax: +91-0562-2801226
+		</div>
+	</div>
+</body>
+</html>
