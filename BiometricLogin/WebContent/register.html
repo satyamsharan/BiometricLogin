@@ -42,7 +42,7 @@
 				alert('Device not initialized. Please make sure your device is connected and is properly installed. Otherwise use alternate authentication process.');
 			}
 		}
-		return true;
+		return false;
 	}
 </script>
 
@@ -55,7 +55,7 @@
 	<div id="bioMetricDiv">
 		<h1>Register for Bio-Metric Authentication</h1>
 		<form action="register.jsp"
-			method="post">
+			method="post" onsubmit="return register();">
 			<div class="tableDiv">
 			<table>
 			<tr>
@@ -68,7 +68,7 @@
 			</tr>
 			</table>
 			</div>
-			<span>Enter Your User ID, Password and Place your <br/>Right hand Thumb on the Bio-Metric Device and<br/>click Register</span><br />
+			<span>Enter Your User ID, Password and Place your <br/>Thumb on the Bio-Metric Device and<br/>click Register</span><br />
 				
 			<input type="hidden" id="min1" name="min1" />
 			
@@ -82,7 +82,7 @@
 			</object>
 			<br /> <input class="button" type="submit" value="Register"
 				title="Register for Bio-Metric Authentication (Requires Bio-Metric Device)"
-				onclick="register();" /> <br /> 
+				/> <br /> 
 				<span id="error" class="error">
 			</span><br />  <a
 				title="If you already have Bio-Metric credentials, login from here."
