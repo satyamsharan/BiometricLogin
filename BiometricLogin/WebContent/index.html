@@ -9,6 +9,7 @@
 		document.getElementById("error").innerHTML = ' ';
 	}
 	function captureFP() {
+		document.getElementById("error").innerHTML=" ";
 		var userId = document.getElementById("eid");
 		if ((!userId.value) || (userId.value == '')
 				|| (userId.value.trim() == '')) {
@@ -56,10 +57,13 @@
 				return true;
 			} else if (result == 52) {
 				alert('Device not initialized. Please make sure your device is connected and is properly installed.');
+				window.location.reload();
 			} else if (result == 57) {
 				alert('Please put your finger on the device before clicking.');
+				window.location.reload();
 			} else {
 				alert('Device not initialized. Please make sure your device is connected and is properly installed. Otherwise use alternate authentication process.');
+				window.location.reload();
 			}
 		}
 		return false;
@@ -74,7 +78,7 @@
 				objVerifyOj.SecurityLevel=6;
 			
 		if ( objVerifyOj.VerifyExForText(strmin1, strmin1, strmin2) && objVerifyOj.ErrorCode == 0){
-			errorLabel.value='Thumb Impression matched';
+			errorLabel.innerHTML='Thumb Impression matched';
 			var xmlhttp;
 			if (window.XMLHttpRequest){
 				// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -92,9 +96,13 @@
 			xmlhttp.open("POST","getPassword.jsp?uid="+userId.value,true);
 			xmlhttp.send();
 		}else if(objVerifyOj.ErrorCode == 106){
-			errorLabel.value='Biometric validation failed. Please try again.';
+			errorLabel.innerHTML='Biometric validation failed. Please try again.';
+			alert('Biometric validation failed. Please try again.');
+			window.location.reload();
 		}else{
-			errorLabel.value=('Failed - ' + objVerifyOj.ErrorCode);
+			errorLabel.innerHTML=('Failed - ' + objVerifyOj.ErrorCode);
+			alert('Failed - ' + objVerifyOj.ErrorCode);
+			window.location.reload();
 		}
 			
 	}
