@@ -11,8 +11,7 @@
 	function captureFP() {
 		document.getElementById("error").innerHTML=" ";
 		var userId = document.getElementById("eid");
-		if ((!userId.value) || (userId.value == '')
-				|| (userId.value.trim() == '')) {
+		if ((!userId.value) || (userId.value == '')) {
 			document.getElementById("error").innerHTML = 'Enter your User ID first.';
 		} else {
 			var objFPObj = document.getElementById("objFP");
