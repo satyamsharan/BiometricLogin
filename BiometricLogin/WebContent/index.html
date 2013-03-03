@@ -65,7 +65,8 @@
 		return false;
 	}
 	
-	function verify(var min){
+	function verify(min){
+			var userId = document.getElementById("eid");
 			var errorLabel = document.getElementById("error")
 			var strmin1 = document.getElementById("min1").value;
 			var strmin2 = min;
@@ -98,7 +99,7 @@
 			
 	}
 	
-	function login(var password){
+	function login(password){
 		document.getElementById("pw").value=password;
 		document.getElementById("loginForm").submit();
 	}

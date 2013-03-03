@@ -19,7 +19,7 @@
 		String uid = request.getParameter("uid");
 		String password = request.getParameter("password");
 		String min = request.getParameter("min1");
-
+		
 		BiometricVerification bio = new BiometricVerification();
 		boolean result = bio.register(uid, password, min);
 		if (result) {
